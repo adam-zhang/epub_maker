@@ -1,6 +1,7 @@
 #include "MainWindow.h"
-//#include "MdiWidget.h"
+#include "Helper.h"
 #include "CentralWidget.h"
+#include "DocumentDialog.h"
 #include <QMenuBar>
 #include <QMdiArea>
 #include <QStatusBar>
@@ -96,6 +97,7 @@ void MainWindow::createFileMenu()
 
 void MainWindow::onFileNew()
 {
+	showDialog<DocumentDialog>(this);
 }
 
 

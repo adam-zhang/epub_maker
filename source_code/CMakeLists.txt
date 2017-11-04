@@ -19,9 +19,12 @@ add_executable(epub_maker
 	main.cpp
 	MainWindow.cpp
 	MdiWidget.cpp
-	CentralWidget.cpp)
+	CentralWidget.cpp
+	DocumentDialog.cpp
+	Document.cpp
+	Helper.cpp)
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(epub_maker Qt5::Widgets
-	Qt5Network
-	Qt5Xml)
+	Qt5::Network
+	Qt5::Xml)
