@@ -1,5 +1,6 @@
 #include "MainWindow.h"
-#include "MdiWidget.h"
+//#include "MdiWidget.h"
+#include "CentralWidget.h"
 #include <QMenuBar>
 #include <QMdiArea>
 #include <QStatusBar>
@@ -23,7 +24,7 @@ MainWindow::~MainWindow()
 void MainWindow::initialize()
 {
 	setWindowTitle("Epub Maker");
-	setCentralWidget(new QMdiArea(this));
+	setCentralWidget(new CentralWidget);
 	initializeMenu();
 	initializeStatusbar();
 	initializeToolbar();
@@ -66,7 +67,7 @@ void MainWindow::onTimeout()
 	QDateTime time = QDateTime::currentDateTime();
 	QString s = time.toString(Qt::ISODate);
 	clock_->setText(s);
-	clock_->adjustSize();
+	//clock_->adjustSize();
 }
 
 void MainWindow::initializeMenu()
@@ -89,13 +90,12 @@ void MainWindow::createEditMenu()
 void MainWindow::createFileMenu()
 {
 	auto menu = menuBar()->addMenu(tr("&File"));
-	auto action = menu->addAction("&New...");
+	auto action = menu->addAction("&New");
 	connect(action, &QAction::triggered, this, &MainWindow::onFileNew);
 }
 
 void MainWindow::onFileNew()
 {
-	mdiArea()->addSubWindow(new MdiWidget);
 }
 
 
