@@ -3,6 +3,7 @@
 #include "Document.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QDebug>
 #include <QMessageBox>
 #include <QListView>
 #include <QTextEdit>

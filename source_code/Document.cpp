@@ -26,6 +26,7 @@ QString Document::getHtmlContent(const QString& url)
 	QNetworkReply *reply = manager->get(request);
 	QEventLoop loop;
 	connect(manager, &QNetworkAccessManager::finished, &loop, &QEventLoop::quit);
+	loop.exec();
 	return reply->readAll();
 }
 

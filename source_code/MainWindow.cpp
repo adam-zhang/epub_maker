@@ -68,7 +68,6 @@ void MainWindow::onTimeout()
 	QDateTime time = QDateTime::currentDateTime();
 	QString s = time.toString(Qt::ISODate);
 	clock_->setText(s);
-	//clock_->adjustSize();
 }
 
 void MainWindow::initializeMenu()
@@ -91,8 +90,10 @@ void MainWindow::createEditMenu()
 void MainWindow::createFileMenu()
 {
 	auto menu = menuBar()->addMenu(tr("&File"));
-	auto action = menu->addAction("&New");
+	auto action = menu->addAction(tr("&New"));
 	connect(action, &QAction::triggered, this, &MainWindow::onFileNew);
+	action = menu->addAction(tr("E&xit"));
+	connect(action, &QAction::triggered, this, &MainWindow::close);
 }
 
 void MainWindow::onFileNew()

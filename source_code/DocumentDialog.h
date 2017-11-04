@@ -23,7 +23,7 @@ class DocumentDialog : public QDialog
 	public:
 		QLineEdit* editAddress()
 		{ return editAddress_;}
-		void setEditAddress(const QLineEdit* value)
+		void setEditAddress(QLineEdit* value)
 		{ editAddress_ = value;}
 };
 #endif//__DOCUMENTDIALOG__H
