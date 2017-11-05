@@ -39,12 +39,7 @@ static void find_links(map<QString, QString>& pairs, const GumboNode* node)
 	{
 		GumboAttribute* href = gumbo_get_attribute(&node->v.element.attributes, "href");
 		if (href)
-		{
-			QString link = href->value;
-			QString text = node->v.text.text;
-			qDebug() << "link:" << link << " " << "text:" << text;
-			pairs.emplace(link, text);
-		}
+			pairs.emplace(href->value, node.v.text.text);
 	}
 	const GumboVector* children = &node->v.element.children;
 	for(auto i = 0; i < children->length; ++i)
@@ -58,7 +53,6 @@ static bool find_links(map<QString, QString>& pairs, const QString& text)
 		return false;
 	find_links(pairs, node->root);
 	gumbo_destroy_output(&kGumboDefaultOptions, node);
-	qDebug() << "pairs' size:" << pairs.size();
 	return true;
 }
 
