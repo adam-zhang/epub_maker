@@ -5,7 +5,8 @@
 #include <QVBoxLayout>
 #include <QDebug>
 #include <QMessageBox>
-#include <QListView>
+//#include <QListView>
+#include <QListWidget>
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QPushButton>
@@ -30,7 +31,7 @@ void DocumentDialog::initialize()
 QLayout* DocumentDialog::createConntentControls()
 {
 	auto layout = new QHBoxLayout;
-	layout->addWidget(new QListView);
+	layout->addWidget(new QListWidget);
 	layout->addWidget(new QTextEdit);
 	return layout;
 }
