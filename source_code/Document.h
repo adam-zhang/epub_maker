@@ -18,8 +18,8 @@ class Document : public QObject
 		const QString& url()const
 		{ return url_;}
 	public:
-		std::map<QString, QString> contents();
+		std::map<QByteArray, QByteArray> contents();
 	private:
-		QString getHtmlContent(const QString& url);
+		QByteArray getHtmlContent(const QString& url);
 };
 #endif//__DOCUMENT__H

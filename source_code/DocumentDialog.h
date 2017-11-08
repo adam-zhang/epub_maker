@@ -2,9 +2,11 @@
 #define __DOCUMENTDIALOG__H
 
 #include <QDialog>
+#include <map>
 
 class QLayout;
 class QLineEdit;
+class QListWidget;
 
 class DocumentDialog : public QDialog
 {
@@ -20,7 +22,13 @@ class DocumentDialog : public QDialog
 		void onButtonBrowse();
 	private:
 		QLineEdit* editAddress_;
+		QListWidget* listWidget_;
+		std::map<QByteArray, QByteArray> links_;
 	public:
+		QListWidget* listWidget()
+		{ return listWidget_;}
+		void setListWidget(QListWidget* value)
+		{ listWidget_ = value;}
 		QLineEdit* editAddress()
 		{ return editAddress_;}
 		void setEditAddress(QLineEdit* value)

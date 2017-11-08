@@ -1,6 +1,8 @@
 #include "DocumentDialog.h"
 #include "Configuration.h"
 #include "Document.h"
+#include <map>
+#include <QTextCodec>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QDebug>
@@ -10,6 +12,8 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QPushButton>
+
+using namespace std;
 
 DocumentDialog::DocumentDialog(QWidget* parent)
 	: QDialog(parent)
@@ -31,7 +35,8 @@ void DocumentDialog::initialize()
 QLayout* DocumentDialog::createConntentControls()
 {
 	auto layout = new QHBoxLayout;
-	layout->addWidget(new QListWidget);
+	setListWidget(new QListWidget);
+	layout->addWidget(listWidget());
 	layout->addWidget(new QTextEdit);
 	return layout;
 }
@@ -47,6 +52,12 @@ QLayout* DocumentDialog::createAddressControles()
 	return layout;
 }
 
+static QString GbkToUtf8(const QByteArray& in)
+{
+	auto utf8 = QTextCodec::codecForName("UTF-8");
+	return utf8->toUnicode(in);
+}
+
 void DocumentDialog::onButtonBrowse()
 {
 	QString text = editAddress()->text();
@@ -56,7 +67,11 @@ void DocumentDialog::onButtonBrowse()
 		return;
 	}
 	Document doc(text);
-	doc.contents();
+	links_ = doc.contents();
+	for(pair<QByteArray, QByteArray> item : links_)
+	{
+		listWidget()->addItem(GbkToUtf8(item.second));
+	}
 }
 
 

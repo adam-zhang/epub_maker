@@ -19,7 +19,7 @@ Document::~Document()
 {
 }
 
-QString Document::getHtmlContent(const QString& url)
+QByteArray Document::getHtmlContent(const QString& url)
 {
 	QNetworkAccessManager* manager = new QNetworkAccessManager(this);
 	QNetworkRequest request;
@@ -31,7 +31,7 @@ QString Document::getHtmlContent(const QString& url)
 	return reply->readAll();
 }
 
-static void find_links(map<QString, QString>& pairs, const GumboNode* node)
+static void find_links(map<QByteArray, QByteArray>& pairs, const GumboNode* node)
 {
 	if (node->type != GUMBO_NODE_ELEMENT) 
 		return;
@@ -46,9 +46,22 @@ static void find_links(map<QString, QString>& pairs, const GumboNode* node)
 		find_links(pairs, static_cast<GumboNode*>(children->data[i]));
 }
 
-static bool find_links(map<QString, QString>& pairs, const QString& text)
+static QString getCode(const GumboNode* node)
 {
-	GumboOutput* node = gumbo_parse(text.toStdString().c_str());
+	return QString();
+}
+
+static QString gbkToUTF8(const QByteArray& byteArray)
+{
+	QString str = QString::fromWCharArray((wchar_t*)byteArray.data());
+	return str;
+}
+
+static bool find_links(map<QByteArray, QByteArray>& pairs, const QByteArray& text)
+{
+	QString utf8 = gbkToUTF8(text);
+	GumboOutput* node = gumbo_parse(text.data());
+	//QString code = getCode(node->root());
 	if (!node)
 		return false;
 	find_links(pairs, node->root);
@@ -56,14 +69,14 @@ static bool find_links(map<QString, QString>& pairs, const QString& text)
 	return true;
 }
 
-static map<QString, QString> parseHtml(const QString& content)
+static map<QByteArray, QByteArray> parseHtml(const QByteArray& content)
 {
-	map<QString, QString> pairs;
+	map<QByteArray, QByteArray> pairs;
 	find_links(pairs, content);
 	return pairs;
 }
 
-map<QString, QString> Document::contents()
+map<QByteArray, QByteArray> Document::contents()
 {
 	return parseHtml(getHtmlContent(url()));
 }
